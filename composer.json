@@ -1,5 +1,13 @@
 {
     "name": "user/smartvalue",
     "description": "smartvalue application",
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "Smartvalue\\": "app/"
+        }
+    },
+    "require": {
+        "phpunit/phpunit": "^4.8",
+        "bramus/router": "~1.4"
+    }
 }
