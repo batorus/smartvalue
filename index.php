@@ -7,16 +7,20 @@ require_once "app/autoload.php";
 use Bramus\Router\Router;
 $router = new Router();
 
-
-
 use Smartvalue\Database\PDOConnection;
-$connection = new PDOConnection;
+$conn = new PDOConnection;
 
-use Smartvalue\Providers\RegisterServiceProvider;
+use Smartvalue\Models\Countries;
 
-$csp = new RegisterServiceProvider();
+$c = new Countries($conn);
 
-var_dump($csp->getService("PDOConnection"));
+var_dump($c->findRecordById(0));
+
+//use Smartvalue\Providers\RegisterServiceProvider;
+//
+//$csp = new RegisterServiceProvider();
+//
+//var_dump($csp->getService("PDOConnection"));
 
 // $router->get("/", function(){
 //  echo "Hello ";
