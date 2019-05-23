@@ -12,9 +12,31 @@ $conn = new PDOConnection;
 
 use Smartvalue\Models\Countries;
 
-$c = new Countries($conn);
+$countries = new Countries($conn);
 
-var_dump($c->findRecordById(0));
+//var_dump($c->findRecordById(0));
+
+//find a record by id
+ $router->get("countries/(\d+)", function(int $id) use ($countries) {
+  try{ 
+   var_dump($countries->findRecordById($id));
+  }catch(\PDOException $e){
+      echo $e->getMessage();
+  }
+ });
+ 
+  $router->get("countries/(\w+)", function(string $code) use ($countries) {
+  try{ 
+   var_dump($countries->findRecordByCountryCode($code));
+  }catch(\PDOException $e){
+      echo $e->getMessage();
+  }
+ });
+ 
+ // //get all customers
+// $router->get("customers/read", function() use ($customersApiController) {
+//   $customersApiController->readAction();
+// });
 
 //use Smartvalue\Providers\RegisterServiceProvider;
 //

@@ -35,7 +35,7 @@ class Countries {
         return $stmt->fetchAll();
     }
     
-    public function findRecordById(int $id): ?array{
+    public function findRecordById(int $id): array{
         
         $query = 'SELECT *
                 FROM '. $this->table . ' lc
@@ -56,13 +56,52 @@ class Countries {
         
        if($stmt->execute() === false)
             throw new \PDOException("Unable to execute query!");
-       
 
-       //fetch returns FALSE in the case that a record is not found
-       if(!$stmt->fetch())
-           return null;
+       $fetch = $stmt->fetch(\PDO::FETCH_ASSOC);
        
-       return $stmt->fetch();
+       //fetch returns FALSE in the case that a record is not found
+       if(!$fetch)
+         return array();
+
+      return $fetch;
+    }
+    
+    public function findRecordByCountryCode(string $code): array{
+        
+        $query = 'SELECT *
+                FROM '. $this->table . ' lc
+                WHERE
+                  lc.code LIKE :code
+                LIMIT 0,1';
+        
+//        $stmt = $db->prepare("SELECT * FROM tbl_name WHERE title LIKE :needle");
+//        $needle = '%somestring%';
+//        $stmt->bindValue(':needle', $needle, PDO::PARAM_STR);
+//        $stmt->execute();
+//        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        try{           
+            $stmt = $this->conn->prepare($query);
+            
+        }catch(\PDOException $e){
+             throw new \PDOException($e->getMessage());
+        }
+        
+        $code = "%$code%";
+        if($stmt->bindParam(":code", $code, \PDO::PARAM_STR) === false)
+            throw new \PDOException("Unable to bind the parameter!");
+        
+        
+       if($stmt->execute() === false)
+            throw new \PDOException("Unable to execute query!");
+
+       $fetch = $stmt->fetch(\PDO::FETCH_ASSOC);
+       
+       //fetch returns FALSE in the case that a record is not found
+       if(!$fetch)
+         return array();
+
+      return $fetch;
     }
     
 }
