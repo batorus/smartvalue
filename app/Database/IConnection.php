@@ -2,5 +2,5 @@
 namespace Smartvalue\Database;
 
 interface IConnection {
-   public function getConnection():IConnection;
+   public function getConnection():object;
 }

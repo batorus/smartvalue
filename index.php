@@ -9,7 +9,14 @@ $router = new Router();
 
 
 
+use Smartvalue\Database\PDOConnection;
+$connection = new PDOConnection;
 
+use Smartvalue\Providers\RegisterServiceProvider;
+
+$csp = new RegisterServiceProvider();
+
+var_dump($csp->getService("PDOConnection"));
 
 // $router->get("/", function(){
 //  echo "Hello ";

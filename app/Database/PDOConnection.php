@@ -9,7 +9,7 @@
     private $db_name = 'teamleader';
     private $username = 'root';
     private $password = '';
-     private $conn;
+    private $conn;
     
     public function __construct(){
       
@@ -26,7 +26,7 @@
 
     }
     
-    public function getConnection():IConnection{
+    public function getConnection():object{
         return $this->conn;
     }
 
