@@ -12,26 +12,6 @@ use Smartvalue\RPC\Server;
 use Smartvalue\ApiControllers\CountriesController;
 
 
-
-//var_dump($c->findRecordById(0));
-
-//find a record by id
-// $router->get("countries/(\d+)", function(int $id) use ($countries) {
-//  try{ 
-//   var_dump($countries->findRecordById($id));
-//  }catch(\PDOException $e){
-//      echo $e->getMessage();
-//  }
-// });
- 
-//  $router->get("countries/(\w+)", function(string $code) use ($countries) {
-//  try{ 
-//   var_dump($countries->findRecordByCountryCode($code));
-//  }catch(\PDOException $e){
-//      echo $e->getMessage();
-//  }
-// });
-// 
  
 //mimic the client 
 $client = new Client();
@@ -82,13 +62,13 @@ $router->get("/", function() use ($client, $server){
  $router->get("read/(\w+)", function(string $code) use ($client, $server) {
      
     try{
-//        $client->query(1, 'findRecordByCountryCode', array($code));
-//        $message = $client->encode(); 
-//        echo $message;
         
-        $message = file_get_contents("php://input");
+// compose the message with client 
+        $client->query(1, 'findRecordByCountryCode', array($code));
+        $message = $client->encode(); 
         echo $message;
-        var_dump($message);die();
+// end client
+
 
         $reply = $server->reply($message); 
 
@@ -99,82 +79,34 @@ $router->get("/", function() use ($client, $server){
     }
  });
  
- // //get all customers
-// $router->get("customers/read", function() use ($customersApiController) {
-//   $customersApiController->readAction();
-// });
+   //Get country by country code through postman request
+ $router->get("countrybycode", function() use ($server) {
+     
+    try{
 
-//use Smartvalue\Providers\RegisterServiceProvider;
-//
-//$csp = new RegisterServiceProvider();
-//
-//var_dump($csp->getService("PDOConnection"));
+        //Example of json for  postman request
+        //{
+        //    "jsonrpc": "2.0",
+        //    "id": 1,
+        //    "method": "findRecordByCountryCode",
+        //    "params": [
+        //        "GB"
+        //    ]
+        //}
+        $message = file_get_contents("php://input");
+       //end request with postman
 
-// $router->get("/", function(){
-//  echo "Hello ";
-// });
+        $reply = $server->reply($message); 
 
-// use Discounts\ApiControllers\CustomersApiController;
-// $customersApiController = new CustomersApiController();
-
-// use Discounts\ApiControllers\ProductsApiController;
-// $productsApiController = new ProductsApiController();
-
-// use Discounts\ApiControllers\OrdersApiController;
-// $ordersApiController = new OrdersApiController();
-
-
-// //Api Routes
-// // process the order here
-// $router->post("order/process", function() use ($ordersApiController) {
+        echo $reply;  
     
-//     $ordersApiController->processOrderAction();
-// });
-
-// //get all customers
-// $router->get("customers/read", function() use ($customersApiController) {
-//   $customersApiController->readAction();
-// });
-
-// //create a customer
-// //json format:
-// /*
-//     {
-//         "name": "Captain Picard",
-//         "revenue": "23158.67",
-//         "since": "2012-01-10"
-//     }
-//  */
-// $router->post("customers/create", function() use ($customersApiController) {
-//   $customersApiController->createAction();
-// });
-
-// //get all products
-// $router->get("products/read", function() use ($productsApiController) {
-//   $productsApiController->readAction();
-// });
-
-// //create a product
-// //json format:
-// /*
-//   {
-//     "id": "A108",
-//     "description": "product description here",
-//     "category": "1",
-//     "price": "26.95"
-// }
-//  */
-
-// $router->post("products/create", function() use ($productsApiController) {
-//   $productsApiController->createAction();
-// });
-
-
-// //find a product by id
-// $router->get("products/read/(\d+)", function($id) use ($productsApiController) {
-//   $productsApiController->findRecordAction($id);
-// });
-
+    }catch(\Exception $e){
+        echo $e->getMessage();
+    }
+ });
+ 
+ 
+ 
 
 $router->run();
 
