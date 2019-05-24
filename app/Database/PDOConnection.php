@@ -1,35 +1,35 @@
 <?php 
-    namespace Smartvalue\Database;
-    use \PDO;
+namespace Smartvalue\Database;
+use \PDO;
 
-  class PDOConnection implements IConnection{
-      
-    // DB Params
-    private $host = 'localhost';
-    private $db_name = 'smartvalue';
-    private $username = 'root';
-    private $password = '';
-    private $conn;
-    
-    public function __construct(){
-      
-      try { 
+class PDOConnection implements IConnection{
 
-        $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+  // DB Params
+  private $host = 'localhost';
+  private $db_name = 'smartvalue';
+  private $username = 'root';
+  private $password = '';
+  private $conn;
 
-      } catch(PDOException $e) {
+  public function __construct(){
 
-        echo 'Connection Error: ' . $e->getMessage();
+    try { 
 
-      }
+      $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);
+      $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    } catch(PDOException $e) {
+
+      echo 'Connection Error: ' . $e->getMessage();
 
     }
-    
-    public function getConnection():object{
-        return $this->conn;
-    }
 
-    
   }
+
+  public function getConnection():object{
+      return $this->conn;
+  }
+
+
+}
