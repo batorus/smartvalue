@@ -2,7 +2,7 @@
 namespace Smartvalue\RPC;
 
 use Smartvalue\RPC\Exceptions\Exception;
-
+use Smartvalue\ApiControllers\ApiEvaluator;
 /**
  * Class Server
  *
@@ -19,7 +19,7 @@ class Server
     /**
      * @param Evaluator $evaluator
      */
-    public function __construct(Evaluator $evaluator)
+    public function __construct(ApiEvaluator $evaluator)
     {
         $this->evaluator = $evaluator;
     }

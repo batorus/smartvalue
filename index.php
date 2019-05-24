@@ -7,30 +7,51 @@ require_once "app/autoload.php";
 use Bramus\Router\Router;
 $router = new Router();
 
-use Smartvalue\Database\PDOConnection;
-$conn = new PDOConnection;
+use Smartvalue\RPC\Client;
+use Smartvalue\RPC\Server;
+use Smartvalue\ApiControllers\CountriesController;
 
-use Smartvalue\Models\Countries;
 
-$countries = new Countries($conn);
 
 //var_dump($c->findRecordById(0));
 
 //find a record by id
- $router->get("countries/(\d+)", function(int $id) use ($countries) {
-  try{ 
-   var_dump($countries->findRecordById($id));
-  }catch(\PDOException $e){
-      echo $e->getMessage();
-  }
- });
+// $router->get("countries/(\d+)", function(int $id) use ($countries) {
+//  try{ 
+//   var_dump($countries->findRecordById($id));
+//  }catch(\PDOException $e){
+//      echo $e->getMessage();
+//  }
+// });
  
-  $router->get("countries/(\w+)", function(string $code) use ($countries) {
-  try{ 
-   var_dump($countries->findRecordByCountryCode($code));
-  }catch(\PDOException $e){
-      echo $e->getMessage();
-  }
+//  $router->get("countries/(\w+)", function(string $code) use ($countries) {
+//  try{ 
+//   var_dump($countries->findRecordByCountryCode($code));
+//  }catch(\PDOException $e){
+//      echo $e->getMessage();
+//  }
+// });
+// 
+ 
+$client = new Client();
+
+$countries = new CountriesController();
+
+$server = new Server($countries);
+
+
+
+$router->get("/", function() use ($client, $server){
+    
+    $client->query(1, 'getAllRecords', []);
+    $message = $client->encode(); 
+        
+    var_dump("Received: ", $message);
+    
+    $reply = $server->reply($message); 
+    
+    var_dump("Reply: ", $reply);
+   
  });
  
  // //get all customers
