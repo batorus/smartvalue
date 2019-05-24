@@ -1,6 +1,6 @@
 <?php
-// header('Access-Control-Allow-Origin: *');
-// header('Content-Type: application/json');
+ header('Access-Control-Allow-Origin: *');
+ header('Content-Type: application/json');
 
 require_once "app/autoload.php";
 
@@ -33,6 +33,7 @@ use Smartvalue\ApiControllers\CountriesController;
 // });
 // 
  
+//mimic the client 
 $client = new Client();
 
 $countries = new CountriesController();
@@ -40,18 +41,62 @@ $countries = new CountriesController();
 $server = new Server($countries);
 
 
-
+//view all countries
 $router->get("/", function() use ($client, $server){
     
-    $client->query(1, 'getAllRecords', []);
-    $message = $client->encode(); 
-        
-    var_dump("Received: ", $message);
+    try{
+        $client->query(1, 'getAllRecords', []);
+        $message = $client->encode(); 
+
+        echo $message;
+
+        $reply = $server->reply($message); 
+
+        echo $reply;
     
-    $reply = $server->reply($message); 
-    
-    var_dump("Reply: ", $reply);
+    }catch(\Exception $e){
+        echo $e->getMessage();
+    }
    
+ });
+ 
+ //Get country by id
+ $router->get("read/(\d+)", function(int $id) use ($client, $server) {
+     
+    try{
+        $client->query(1, 'findRecordById', array($id));
+        $message = $client->encode(); 
+        echo $message;
+
+        $reply = $server->reply($message); 
+
+        echo $reply;  
+    
+    }catch(\Exception $e){
+        echo $e->getMessage();
+    }
+ });
+ 
+ 
+  //Get country by country code
+ $router->get("read/(\w+)", function(string $code) use ($client, $server) {
+     
+    try{
+//        $client->query(1, 'findRecordByCountryCode', array($code));
+//        $message = $client->encode(); 
+//        echo $message;
+        
+        $message = file_get_contents("php://input");
+        echo $message;
+        var_dump($message);die();
+
+        $reply = $server->reply($message); 
+
+        echo $reply;  
+    
+    }catch(\Exception $e){
+        echo $e->getMessage();
+    }
  });
  
  // //get all customers

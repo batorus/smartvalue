@@ -3,6 +3,8 @@
 namespace Smartvalue\ApiControllers;
 use Smartvalue\Models\Countries;
 use Smartvalue\Database\PDOConnection;
+use Smartvalue\RPC\Exceptions\ArgumentException;
+use Smartvalue\RPC\Exceptions\MethodException;
 
 
 class CountriesController implements ApiEvaluator{
@@ -16,17 +18,31 @@ class CountriesController implements ApiEvaluator{
     public function evaluate($method, $arguments = []) {
         
         if ($method === 'getAllRecords') {
-             
-//            @list($a, $b) = $arguments;
-//            if (!is_int($a) || !is_int($b)) {
-//                throw new ArgumentException();
-//            }
-//            return Math::add($a, $b);
-//             
-//            return self::add($arguments);
             
             return $this->countries->getAllRecords();
         }
+        
+        if ($method === 'findRecordById') {
+             
+            [$id] = $arguments;
+            
+            if (!is_int($id)) {
+                throw new ArgumentException();
+            }
+           
+            return $this->countries->findRecordById($id);
+        }
+        
+        if ($method === 'findRecordByCountryCode') {
+             
+            [$code] = $arguments;
+            
+            if (!is_string($code)) {
+                throw new ArgumentException();
+            }
+           
+            return $this->countries->findRecordByCountryCode($code);
+        }        
         
         throw new MethodException();        
     }
