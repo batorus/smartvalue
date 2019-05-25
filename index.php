@@ -7,12 +7,24 @@ require_once "app/autoload.php";
 use Bramus\Router\Router;
 $router = new Router();
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+$request = Request::createFromGlobals();
+
+
+$router->get("/testrequest", function() use ($request){
+    
+    return new RedirectResponse("/", 302);
+});
+
+
 use Smartvalue\RPC\Client;
 use Smartvalue\RPC\Server;
 use Smartvalue\ApiControllers\CountriesController;
 
 
- 
 //mimic the client 
 $client = new Client();
 
