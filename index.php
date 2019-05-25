@@ -5,12 +5,11 @@
 require_once "app/autoload.php";
 
 use Bramus\Router\Router;
-$router = new Router();
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+$router = new Router();
 $request = Request::createFromGlobals();
 $baseurl = $request->getBaseUrl();
 
