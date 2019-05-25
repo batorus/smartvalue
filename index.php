@@ -12,11 +12,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 $request = Request::createFromGlobals();
+$baseurl = $request->getBaseUrl();
 
-
-$router->get("/testrequest", function() use ($request){
-    
-    return new RedirectResponse("/", 302);
+$router->get("test/(\d+)", function(int $id) use ($request, $baseurl){
+    return (new RedirectResponse($baseurl."/read/$id"))->send();
 });
 
 
