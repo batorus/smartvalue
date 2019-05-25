@@ -8,8 +8,8 @@ use Bramus\Router\Router;
 $router = new Router();
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 $request = Request::createFromGlobals();
 $baseurl = $request->getBaseUrl();
