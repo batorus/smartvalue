@@ -6,6 +6,11 @@
             "Smartvalue\\": "app/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Smartvalue\\Tests\\": "tests"
+        }
+    },
     "require": {
         "phpunit/phpunit": "^4.8",
         "bramus/router": "~1.4",

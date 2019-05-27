@@ -15,7 +15,7 @@ class CountriesController implements ApiEvaluator{
         $this->countries = new Countries(new PDOConnection);
     }
     
-    public function evaluate($method, $arguments = []) {
+    public function evaluate(string $method, array $arguments = []) {
         
         if ($method === 'getAllRecords') {
             
@@ -24,7 +24,7 @@ class CountriesController implements ApiEvaluator{
         
         if ($method === 'findRecordById') {
              
-            [$id] = $arguments;
+            $id = isset($arguments[0])? $arguments[0] : null;
             
             if (!is_int($id)) {
                 throw new ArgumentException();
@@ -35,7 +35,7 @@ class CountriesController implements ApiEvaluator{
         
         if ($method === 'findRecordByCountryCode') {
              
-            [$code] = $arguments;
+            $code = isset($arguments[0])? $arguments[0] : null;
 
             if (!is_string($code)) {
                 throw new ArgumentException();
