@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89ae99514873d79d47f877bcdd8313c2",
+    "content-hash": "03f36f599009abf50d049027067b2597",
     "packages": [
         {
             "name": "bramus/router",
@@ -139,6 +139,60 @@
                 "instantiate"
             ],
             "time": "2019-03-17T17:37:11+00:00"
+        },
+        {
+            "name": "eftec/bladeone",
+            "version": "3.27",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EFTEC/BladeOne.git",
+                "reference": "0e4ee062e385c7b226f9953d754bc57ebe072d85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EFTEC/BladeOne/zipball/0e4ee062e385c7b226f9953d754bc57ebe072d85",
+                "reference": "0e4ee062e385c7b226f9953d754bc57ebe072d85",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.27-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "eftec\\bladeone\\": "lib/",
+                    "eftec\\tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jorge Patricio Castro Castillo",
+                    "email": "jcastro@eftec.cl"
+                }
+            ],
+            "description": "The standalone version Blade Template Engine from Laravel in a single php file",
+            "homepage": "https://github.com/EFTEC/BladeOne",
+            "keywords": [
+                "blade",
+                "php",
+                "template",
+                "templating",
+                "view"
+            ],
+            "time": "2019-05-25T23:05:48+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",

@@ -8,13 +8,25 @@ use Bramus\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+Use eftec\bladeone\BladeOne;
 
 $router = new Router();
 $request = Request::createFromGlobals();
 $baseurl = $request->getBaseUrl();
 
-$router->get("test/(\d+)", function(int $id) use ($request, $baseurl){
-    return (new RedirectResponse($baseurl."/read/$id"))->send();
+$views = __DIR__ . '/app/views';
+$cache = __DIR__ . '/app/cache';
+$blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
+
+//echo $blade->run("hello",array("variable1"=>"value1"));
+
+//$router->get("test/(\d+)", function(int $id) use ($request, $baseurl){
+//    return (new RedirectResponse($baseurl."/read/$id"))->send();
+//});
+
+$router->get("about", function() use ($blade, $baseurl){
+   echo $blade->run("smartvalue.about",array("content"=>"About this project",
+                                             "base_url"=>$baseurl));
 });
 
 
