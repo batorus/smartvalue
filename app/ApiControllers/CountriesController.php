@@ -36,11 +36,11 @@ class CountriesController implements ApiEvaluator{
         if ($method === 'findRecordByCountryCode') {
              
             [$code] = $arguments;
-            
+
             if (!is_string($code)) {
                 throw new ArgumentException();
             }
-           
+
             return $this->countries->findRecordByCountryCode($code);
         }        
         

@@ -7,7 +7,6 @@
         <input type="submit" name="Send">
     </form>
 
-
     @if (count($results)>0)
         @foreach ($results as $key => $value)
             <p> {{$key }} : {{ $value}}</p>

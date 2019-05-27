@@ -67,7 +67,7 @@ class Countries {
     }
     
     public function findRecordByCountryCode(string $code): array{
-        
+
         $query = 'SELECT lc.prefix, lc.name
                 FROM '. $this->table . ' lc
                 WHERE
@@ -81,15 +81,15 @@ class Countries {
              throw new \PDOException($e->getMessage());
         }
         
-        $code = "%$code%";
-        if($stmt->bindParam(":code", $code, \PDO::PARAM_STR) === false)
+        $code = !empty($code) ?  "%$code%" : null;
+        if($stmt->bindParam(":code", $code) === false)
             throw new \PDOException("Unable to bind the parameter!");
-              
+    
        if($stmt->execute() === false)
             throw new \PDOException("Unable to execute query!");
-
+ 
        $fetch = $stmt->fetch(\PDO::FETCH_ASSOC);
-       
+
        //fetch returns FALSE in the case that a record is not found
        if(!$fetch)
          return array();
