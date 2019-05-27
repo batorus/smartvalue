@@ -2,7 +2,7 @@
 
 @section("content")
 
-    <form action="/batorus/smartvalue/postform" method="POST">
+    <form action="{{$baseurl}}/postform" method="POST">
         <input type="text" value="" name="code">
         <input type="submit" name="Send">
     </form>
