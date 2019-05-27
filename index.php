@@ -8,6 +8,11 @@ use Bramus\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Smartvalue\RPC\Client;
+use Smartvalue\RPC\Server;
+use Smartvalue\ApiControllers\CountriesController;
+
 Use eftec\bladeone\BladeOne;
 
 $router = new Router();
@@ -18,6 +23,8 @@ $views = __DIR__ . '/app/views';
 $cache = __DIR__ . '/app/cache';
 $blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
 
+$countries = new CountriesController();
+
 //echo $blade->run("hello",array("variable1"=>"value1"));
 
 //$router->get("test/(\d+)", function(int $id) use ($request, $baseurl){
@@ -26,20 +33,40 @@ $blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
 
 $router->get("about", function() use ($blade, $baseurl){
    echo $blade->run("smartvalue.about",array("content"=>"About this project",
-                                             "base_url"=>$baseurl));
+                                             "baseurl"=>$baseurl,                                           
+                                            ));
+});
+
+$router->post("postform", function() use ($blade, $baseurl,$request, $countries){
+
+    $results = $countries->evaluate("findRecordByCountryCode", [$request->get("code")]);
+
+    echo $blade->run("smartvalue.form",array(
+                                            "results"=>$results,  
+                                             "baseurl"=>$baseurl,  
+                                            ));
+});
+
+$router->get("postform", function() use ($baseurl){
+
+    return (new RedirectResponse($baseurl."/read/$id"))->send();
+    
+});
+
+$router->get("getform", function() use ($blade, $baseurl,$request){
+       echo $blade->run("smartvalue.form",array("content"=>"Form data",
+                                                "baseurl"=>$baseurl,                                           
+                                               ));
 });
 
 
-use Smartvalue\RPC\Client;
-use Smartvalue\RPC\Server;
-use Smartvalue\ApiControllers\CountriesController;
 
 
-//mimic the client 
+############################### JSON - RPC part of the application
+//start the RPC client 
 $client = new Client();
 
-$countries = new CountriesController();
-
+//start the RPC Server
 $server = new Server($countries);
 
 
