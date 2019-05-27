@@ -8,7 +8,7 @@
          verbose="true"
 >
     <testsuites>
-      <testsuite name="tests for discounts">
+      <testsuite name="tests for smartvalue">
         <directory>tests</directory>
       </testsuite>
     </testsuites>

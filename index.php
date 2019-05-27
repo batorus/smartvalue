@@ -25,43 +25,6 @@ $blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
 
 $countries = new CountriesController();
 
-//echo $blade->run("hello",array("variable1"=>"value1"));
-
-//$router->get("test/(\d+)", function(int $id) use ($request, $baseurl){
-//    return (new RedirectResponse($baseurl."/read/$id"))->send();
-//});
-
-$router->get("about", function() use ($blade, $baseurl){
-   echo $blade->run("smartvalue.about",array("content"=>"About this project",
-                                             "baseurl"=>$baseurl,                                           
-                                            ));
-});
-
-$router->post("postform", function() use ($blade, $baseurl,$request, $countries){
-
-    $results = $countries->evaluate("findRecordByCountryCode", [$request->get("code")]);
-
-    echo $blade->run("smartvalue.form",array(
-                                             "results"=>$results,  
-                                             "baseurl"=>$baseurl,  
-                                            ));
-});
-
-$router->get("postform", function() use ($baseurl){
-
-    return (new RedirectResponse($baseurl."/about"))->send();
-    
-});
-
-$router->get("getform", function() use ($blade, $baseurl,$request){
-       echo $blade->run("smartvalue.form",array(
-                                                "results"=>[],
-                                                "baseurl"=>$baseurl,                                           
-                                               ));
-});
-
-
-
 
 ############################### JSON - RPC part of the application
 //start the RPC client 
@@ -156,6 +119,36 @@ $router->get("/", function() use ($client, $server){
  });
  
  
+ ############### Routes for the form processing ###########
+ $router->get("about", function() use ($blade, $baseurl){
+   echo $blade->run("smartvalue.about",array(
+                                            "baseurl"=>$baseurl,                                           
+                                            ));
+});
+
+$router->post("postform", function() use ($blade, $baseurl,$request, $countries){
+
+    $results = $countries->evaluate("findRecordByCountryCode", [$request->get("code")]);
+
+    echo $blade->run("smartvalue.form",array(
+                                             "results"=>$results,  
+                                             "baseurl"=>$baseurl,  
+                                            ));
+});
+
+$router->get("postform", function() use ($baseurl){
+
+    return (new RedirectResponse($baseurl."/about"))->send();
+    
+});
+
+$router->get("getform", function() use ($blade, $baseurl,$request){
+       echo $blade->run("smartvalue.form",array(
+                                                "results"=>[],
+                                                "baseurl"=>$baseurl,                                           
+                                               ));
+});
+
  
 
 $router->run();
