@@ -6,8 +6,7 @@
     </head>
     <body>
         <ul>
-            <li><a href="{{ $baseurl }}/about">About</a></li>
-            <li><a href="{{$baseurl}}/content">Content</a></li>
+            <li><a href="{{$baseurl}}/getform">View the form</a></li>
         </ul>
         
         @yield("content")

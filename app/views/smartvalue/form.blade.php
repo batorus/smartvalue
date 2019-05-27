@@ -13,7 +13,7 @@
             <p> {{$key }} : {{ $value}}</p>
         @endforeach
     @else
-        No  records!
+        Enter a search term!
     @endif    
     
 @endsection

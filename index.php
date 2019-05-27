@@ -42,19 +42,20 @@ $router->post("postform", function() use ($blade, $baseurl,$request, $countries)
     $results = $countries->evaluate("findRecordByCountryCode", [$request->get("code")]);
 
     echo $blade->run("smartvalue.form",array(
-                                            "results"=>$results,  
+                                             "results"=>$results,  
                                              "baseurl"=>$baseurl,  
                                             ));
 });
 
 $router->get("postform", function() use ($baseurl){
 
-    return (new RedirectResponse($baseurl."/read/$id"))->send();
+    return (new RedirectResponse($baseurl."/about"))->send();
     
 });
 
 $router->get("getform", function() use ($blade, $baseurl,$request){
-       echo $blade->run("smartvalue.form",array("content"=>"Form data",
+       echo $blade->run("smartvalue.form",array(
+                                                "results"=>[],
                                                 "baseurl"=>$baseurl,                                           
                                                ));
 });
