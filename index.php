@@ -119,7 +119,7 @@ $router->get("/", function() use ($client, $server){
  });
  
  
- ############### Routes for the form processing ###########
+ ############### Routes for the form processing part of the application ###########
  $router->get("about", function() use ($blade, $baseurl){
    echo $blade->run("smartvalue.about",array(
                                             "baseurl"=>$baseurl,                                           
